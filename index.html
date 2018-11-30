@@ -683,23 +683,7 @@ handler.apply // 当目标对象为函数，且被调用时触发。
 - 用一个单一的全局对象去存储这些方法，能够保持其它的JavaScript代码的整洁、干净
 - 将一些命令式的操作如delete，in等使用函数来替代，这样做的目的是为了让代码更加好维护，更容易向下兼容
 	</section>
-	<section data-markdown>
-```
-Reflect.apply // Function.prototype.apply
-Reflect.construct // new
-Reflect.defineProperty // Object.defineProperty
-Reflect.deleteProperty // Object.deleteProperty
-Reflect.get // obj.foo
-Reflect.set // obj.foo = 1
-Reflect.has // in
-Reflect.getOwnPropertyDescriptor //  Object.getOwnPropertyDescriptor
-Reflect.getPrototypeOf // Object.getPrototypeOf
-Reflect.setPrototypeOf // Object.setPrototypeOf
-Reflect.isExtensible // Object.isExtensible
-Reflect.ownKeys // Object.getOwnPropertyNames(obj).concat(Object.getOwnPropertySymbols(obj))
-Reflect.preventExtensions // Object.preventExtensions
-```
-	</section>
+
 	<section data-markdown>
 ```
 let num = 1
@@ -723,6 +707,23 @@ console.log('a',Reflect.get(num, 'a'))  // a
 console.log(num) // {b: "b", a: "a"}
 [run]
 ```
+	</section>
+	<section data-markdown>
+		```
+		Reflect.apply // Function.prototype.apply
+		Reflect.construct // new
+		Reflect.defineProperty // Object.defineProperty
+		Reflect.deleteProperty // Object.deleteProperty
+		Reflect.get // obj.foo
+		Reflect.set // obj.foo = 1
+		Reflect.has // in
+		Reflect.getOwnPropertyDescriptor //  Object.getOwnPropertyDescriptor
+		Reflect.getPrototypeOf // Object.getPrototypeOf
+		Reflect.setPrototypeOf // Object.setPrototypeOf
+		Reflect.isExtensible // Object.isExtensible
+		Reflect.ownKeys // Object.getOwnPropertyNames(obj).concat(Object.getOwnPropertySymbols(obj))
+		Reflect.preventExtensions // Object.preventExtensions
+		```
 	</section>
 </section>
 
