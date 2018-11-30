@@ -710,6 +710,32 @@ console.log(num) // {b: "b", a: "a"}
 	</section>
 	<section data-markdown>
 		```
+		// 老写法
+		try {
+			Object.defineProperty(target, property, attributes);
+			// success
+		} catch (e) {
+			// failure
+		}
+		
+		// 新写法
+		if (Reflect.defineProperty(target, property, attributes)) {
+			// success
+		} else {
+			// failure
+		}`
+
+		```
+		```
+// 老写法
+'assign' in Object // true
+
+// 新写法
+Reflect.has(Object, 'assign') // true
+		```
+	</section>
+	<section data-markdown>
+		```
 		Reflect.apply // Function.prototype.apply
 		Reflect.construct // new
 		Reflect.defineProperty // Object.defineProperty
