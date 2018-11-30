@@ -72,8 +72,9 @@ let b = 2
 ```javascript
 var a = 1 
 {
+	// TDZ开始
 	console.log(a)  // ReferenceError
-	let a = 1 
+	let a = 1  // TDZ结束
 }
 [run]
 ```
