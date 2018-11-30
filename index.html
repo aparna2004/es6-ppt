@@ -546,22 +546,26 @@ wm.set(ele, "123")
   <section data-markdown>
     ### 私有属性
 ```
-const private = new WeakMap()
-class Person {
-  constructor(name) {
-		private.set(this, {name})
-	}
+const Person = (function() {
+  const private = new WeakMap()
 
-  setName(name) {
+  function Person(name) {
+		private.set(this, {})
 		private.get(this).name = name
-	}
-
-  getName() {
-		return private.get(this).name
   }
-}
 
-export default Person
+  Person.prototype.getName = function() {
+    return private.get(this).name
+  }
+
+  return Person
+}())
+
+let person1 = new Person('小明')
+let person2 = new Person('大明')
+console.log(person1.getName()) // 小明
+console.log(person2.getName()) // 大明
+[run]
 ```
 https://juejin.im/post/5b852d51f265da43351d6580
 	</section>
@@ -610,6 +614,7 @@ console.log(3)
 ```
 	</section>
 	<section data-markdown>
+		# macro task & micro task
 		https://github.com/creeperyang/blog/issues/21
 		https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
 		https://jsblog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810
