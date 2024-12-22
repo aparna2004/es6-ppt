@@ -1,10 +1,13 @@
+
+
+```html
 <!doctype html>
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
 
-		<title>es6基础</title>
+		<title>ES6 Basics</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -29,14 +32,14 @@
 <section>
 	<section data-markdown>
 		# ES6
-		- let & const、变量提升、暂时死区（TDZ）
-		- 延展符
-		- 解构赋值
-		- 模板字符串
-		- 函数
+		- let & const, variable hoisting, the temporal dead zone (TDZ)
+		- Spread operator
+		- Destructuring assignment
+		- Template strings
+		- Functions
 		- Generator
 		- Map/WeakMap(Set)
-		- Promise & async function、macro task & micro task
+		- Promise & async function, macro task & micro task
 		- Proxy
 		- Reflect
 	</section>
@@ -45,7 +48,7 @@
 <section>
 	<section data-markdown>
 		# let & const
-		ES6 新增了let和const命令，用来声明变量。它的用法类似于var，但是所声明的变量，只在let命令所在的代码块内有效。
+		ES6 introduces the let and const commands for declaring variables. Their usage is similar to var, but the variables declared are only valid within the code block where the let command is located.
 ```javascript
 {
 	var a = 1
@@ -58,7 +61,7 @@ console.log(b) // ReferenceError
 ```
 	</section>
 	<section data-markdown>
-		### 关于变量提升
+		### About Variable Hoisting
 ```javascript
 console.log(a)  // undefined
 var a = 1 
@@ -72,23 +75,18 @@ let b = 2
 ```javascript
 var a = 1 
 {
-	// TDZ开始
+	// TDZ starts
 	console.log(a)  // ReferenceError
-	let a = 1  // TDZ结束
+	let a = 1  // TDZ ends
 }
 [run]
 ```
-	</section>
-	<section data-markdown>
-		### 值得读一下  
-		https://zhuanlan.zhihu.com/p/28140450
-		https://stackoverflow.com/questions/31219420/are-variables-declared-with-let-or-const-not-hoisted-in-es6/31222689
 	</section>
 </section>
 
 <section>
 	<section data-markdown>
-		# 延展符
+		# Spread Operator
 ```javascript
 let arr1 = ['a', 'b'] 
 let ar2 = [1, 2, ...arr1]  // [ 1, 2, 'a', 'b']
@@ -104,7 +102,7 @@ let chars = [ ...str ] // [ "f", "o", "o" ]
 ```
 	</section>
 	<section data-markdown>
-		### 对象的延展符（es2018/es9）
+		### Object Spread (es2018/es9)
 ```javascript
 let obj1 = { foo: 'bar', x: 42 } 
 let obj2 = { foo: 'baz', y: 13 } 
@@ -112,23 +110,11 @@ let obj2 = { foo: 'baz', y: 13 }
 let mergedObj = { ...obj1, ...obj2 }; // { foo: "baz", x: 42, y: 13 }
 ```
 	</section>
-	<section data-markdown>
-		<script type="text/template">
-			### redux推荐使用对象延展符
-			<img src="img/redux_objSpread.png" style="width: 90vh" />
-		</script>
-	</section>
-	<section data-markdown>
-		<script type="text/template">
-			### babel已默认支持对象延展符
-			<img src="img/babel.png" />
-		</script>
-	</section>
 </section>
 
 <section>
 	<section data-markdown>
-		# 解构赋值
+		# Destructuring Assignment
 ```javascript
 let {a, b: val1, d = 'dddd'} = {a: 'aa', b: 'bb', c: 'cc'} 
 console.log(a, val1, d) // aa bb dddd
@@ -144,7 +130,7 @@ console.log(c1, c2, c3) // 1 2 3
 ```
 	</section>
 	<section data-markdown>
-			### 解构赋值时使用延展符
+			### Using the spread operator in destructuring
 ```javascript
 let {a, ...others} = {a: 1, b: 2, c: 3} 
 console.log(a, others) // 1 {b: 2, c: 3}
@@ -158,7 +144,7 @@ console.log(val1, otherVals) // 1 [2, 3]
 
 <section>
 	<section data-markdown>
-		# 模板字符串
+		# Template Strings
 ```javascript
 let customer = { name: "Foo" }
 let card = { amount: 7, product: "Bar", unitprice: 42 }
@@ -176,7 +162,7 @@ a total of 294 bucks?
 ```
 	</section>
 	<section data-markdown>
-		### 带标签的模板字符串
+		### Tagged Template Strings
 ```javascript
 let a = 'aaaa' 
 let b = 10 
@@ -197,8 +183,8 @@ fn(['lalala ', ' yayaya ', ''], a, b)
 
 <section>
 	<section data-markdown>
-		# 函数
-		### 默认值
+		# Functions
+		### Default Values
 ```javascript
 function plus(a = 1, b = 1) {
 	return a + b 
@@ -228,14 +214,14 @@ function fetch2(url, { body = '', method = 'GET', headers = {} } = {}) {
 fetch1('http://example.com', {body: '123'}) // 123 GET
 
 fetch2('http://example.com') // GET
-fetch1('http://example.com') // 报错
+fetch1('http://example.com') // error
 
 
 [run]
 ```
 	</section>
 	<section data-markdown>
-		### 箭头函数
+		### Arrow Functions
 ```javascript
 let f = v => v;
 let f = function (v) {return v;} 
@@ -252,7 +238,7 @@ let fn = () => void doesNotReturn()
 ```
 	</section>
 	<section data-markdown>
-		### 箭头函数的this   
+		### The this in Arrow Functions
 ```javascript
 function Person1() {
 	this.age = 24 
@@ -310,7 +296,7 @@ function* anotherGenerator(i) {
 
 function* generator(i){
 	yield i
-	yield* anotherGenerator(i) // 移交执行权
+	yield* anotherGenerator(i) // Transfer execution rights
 	yield i + 10
 }
 
@@ -329,7 +315,7 @@ console.log(gen.next().value) // 20
 <section>
 	<section data-markdown>
 		# for...of
-		for...of语句在可迭代对象（包括 Array，Map，Set，String，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
+		The for...of statement creates a loop iterating over iterable objects (including Array, Map, Set, String, arguments object, etc.), calling a custom iteration hook, and executes statements for the value of each different property.
 ```javascript
 let iterable = [10, 20, 30]
 
@@ -343,134 +329,6 @@ for (let [index, elem] of ['a', 'b'].entries()) {
 ```
 	</section>
 </section>
-
-<!-- <section>
-	<section data-markdown>
-		<script type="text/template">
-			# 可迭代协议
-			可迭代协议允许 JavaScript 对象去定义或定制它们的迭代行为, 例如（定义）在一个 for..of 结构中什么值可以被循环得到。   
-			为了变成可迭代对象， 一个对象必须实现 **@@iterator** 方法, 意思是这个对象（或者它原型链 prototype chain 上的某个对象）必须有一个名字是 **Symbol.iterator** 的属性:   
-			<table>
-				<thead>
-					<tr>
-						<th>属性</th>
-						<th>值</th>
-					</tr>
-			</thead>
-				<tbody>
-					<tr>
-						<td>[Symbol.iterator]	</td>
-						<td>返回一个对象的无参函数，被返回对象符合迭代器协议。</td>
-					</tr>
-				</tbody>
-			</table>
-		</script>
-	</section>
-	<section data-markdown>
-		<script type="text/template">
-			# 迭代器协议
-			该迭代器协议定义了一种标准的方式来产生一个有限或无限序列的值。   
-			当一个对象被认为是一个迭代器时，它实现了一个 next() 的方法并且拥有以下含义：  
-			<table>
-				<thead>
-					<tr>
-						<th>属性</th>
-						<th>值</th>
-					</tr>
-			</thead>
-				<tbody>
-					<tr >
-						<td>next</td>
-						<td>
-							返回一个对象的无参函数，被返回对象拥有两个属性：
-							<ul>
-								<li>
-									done (boolean)
-									<ul>
-										<li>如果迭代器已经经过了被迭代序列时为 true。</li>
-										<li>如果迭代器可以产生序列中的下一个值，则为 false。这等效于连同 done 属性也不指定。</li>
-									</ul>
-								</li>
-								<li>
-									value - 迭代器返回的任何 JavaScript 值。done 为 true 时可省略。
-								</li>
-							</ul>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</script>
-	</section>
-	<section data-markdown>
-<script type="text/template"><pre><code class="javascript" data-trim style="max-height: 500px;">
-let obj = {}     
-obj[Symbol.iterator] = function() {
-	return {
-		next: function() {
-			if (this._count < 4) {
-				return { value: this._count++, done: false };
-			} else {
-				return { done: true } 
-			}
-		},
-		_count: 1
-	};
-};
-
-let itr = obj[Symbol.iterator]() 
-console.log(itr.next().value)  // 1
-console.log(itr.next().value)  // 2
-console.log(itr.next().value)  // 3
-console.log(itr.next().value)  // undefined
-
-for(let val of obj) console.log(val)  // 1 2 3
-
-console.log([...obj])  // [1, 2, 3]
-[run]
-</code></pre></script>
-  </section>
-  <section data-markdown>
-```javascript
-var obj = {} 
-obj[Symbol.iterator] = function* () {
-	yield 1 
-	yield 2 
-	yield 3 
-};
-
-let itr = obj[Symbol.iterator]() 
-console.log(itr.next().value)  // 1
-console.log(itr.next().value)  // 2
-console.log(itr.next().value)  // 3
-console.log(itr.next().value)  // undefined
-
-for(let val of obj) console.log(val)  // 1 2 3
-
-console.log([...obj])  // [1, 2, 3]
-[run]
-```
-	</section>
-	<section data-markdown>
-		# 用于可迭代对象的语法
-		一些语句和表达式是预料会用于可迭代对象，比如 for-of 循环，延展符, yield* 和 解构赋值。
-```javascript
-for(let value of ["a", "b", "c"]){
-	console.log(value)  // a, b, c
-}
-
-console.log([..."abc"])  // ["a", "b", "c"]
-
-function* gen(){
-	yield* ["a", "b", "c"] 
-}
-console.log(gen().next())  // { value:"a", done:false }
-
-let [a, b, c] = new Set(["a", "b", "c"]) 
-console.log(a, b, c); // "a" "b" "c"
-[run]
-```
-	</section>
-</section> -->
 
 <section>
 	<section data-markdown>
@@ -514,8 +372,8 @@ console.log(set.has(1))  // true
 	</section>
 	<section data-markdown>
 		# WeakMap
-		WeakMap 对象是一组键/值对的集合，其中的键是弱引用的。其键必须是对象，而值可以是任意的。  
-		WeakMap 每个键对自己所引用对象的引用是 "弱引用"，这意味着，如果没有其他引用和该键引用同一个对象，这个对象将会被当作垃圾回收
+		A WeakMap object is a collection of key/value pairs in which the keys are weakly referenced. Keys must be objects, while values can be arbitrary.  
+		Each key in a WeakMap holds a "weak reference" to its value. That means if there is no other reference to the key object, the object can be reclaimed by garbage collection.
 ```javascript
 let objKey = {}
 let m = new Map()
@@ -537,7 +395,7 @@ console.log(wm.get(objKey2))
 	</section>
 
 	<section data-markdown>
-		### 在 dom 对象上存储数据
+		### Storing data in DOM objects
 ```javascript
 let wm = new WeakMap()
 let ele = document.querySelector(".lalala")
@@ -545,7 +403,7 @@ wm.set(ele, "123")
 ```
 	</section>
   <section data-markdown>
-    ### 私有属性
+    ### Private Properties
 ```
 const Person = (function() {
   const private = new WeakMap()
@@ -562,20 +420,19 @@ const Person = (function() {
   return Person
 }())
 
-let person1 = new Person('小明')
-let person2 = new Person('大明')
-console.log(person1.getName()) // 小明
-console.log(person2.getName()) // 大明
+let person1 = new Person('Xiao Ming')
+let person2 = new Person('Da Ming')
+console.log(person1.getName()) // Xiao Ming
+console.log(person2.getName()) // Da Ming
 [run]
 ```
-https://juejin.im/post/5b852d51f265da43351d6580
 	</section>
 </section>
 
 <section>
 	<section data-markdown>
 	# Promise & async function
-	await 操作符用于等待一个 Promise 对象, 它只能在异步函数 async function 内部使用.
+	The await operator is used to wait for a Promise object and can only be used inside an async function.
 ```
 const promise1 = new Promise(function(resolve, reject) {
 	setTimeout(function() {
@@ -602,7 +459,7 @@ asyncFunc()
 ```
 	</section>
 	<section data-markdown>
-```
+```javascript
 setTimeout(function() {console.log(5)}, 0)
 new Promise((resolve) => {
   console.log(1)
@@ -617,10 +474,10 @@ console.log(3)
 	</section>
 	<section data-markdown>
 		# macro task & micro task
-		https://github.com/creeperyang/blog/issues/21
-		https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
-		https://jsblog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810
-		https://zhuanlan.zhihu.com/p/35039878
+		https://github.com/creeperyang/blog/issues/21  
+		https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/  
+		https://jsblog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810  
+		https://zhuanlan.zhihu.com/p/35039878  
 		https://cnodejs.org/topic/57d68794cb6f605d360105bf
 	</section>
 </section>
@@ -628,7 +485,7 @@ console.log(3)
 <section>
 	<section data-markdown>
 # Proxy
-Proxy 对象用于定义基本操作的自定义行为（如属性查找，赋值，枚举，函数调用等）
+The Proxy object is used to define custom behavior for fundamental operations (e.g. property lookup, assignment, enumeration, function invocation, etc.).
 ```
 let p = new Proxy(target, handler)
 ```
@@ -672,7 +529,7 @@ handler.getPrototypeOf // Object.getPrototypeOf(obj)、obj.__proto__
 handler.setPrototypeOf // Object.setPrototypeOf(obj)
 handler.preventExtensions // Object.preventExtensions(obj)
 handler.isExtensible // Object.isExtensible(obj)
-handler.apply // 当目标对象为函数，且被调用时触发。
+handler.apply // Triggered when the target object is a function and is called.
 ```
 		</section>
 </section>
@@ -680,9 +537,9 @@ handler.apply // 当目标对象为函数，且被调用时触发。
 <section>
 	<section data-markdown>
 # Reflect
-- 将Object对象的一些明显属于语言内部的方法（比如Object.defineProperty），放到Reflect对象上
-- 用一个单一的全局对象去存储这些方法，能够保持其它的JavaScript代码的整洁、干净
-- 将一些命令式的操作如delete，in等使用函数来替代，这样做的目的是为了让代码更加好维护，更容易向下兼容
+- Moves some of Object’s internal methods (e.g. Object.defineProperty) to the Reflect object
+- Storing these methods in a single global object makes other JavaScript code clearer and cleaner
+- Replaces certain imperative operations like delete and in with function equivalents, to make code more maintainable and backward-compatible
 	</section>
 
 	<section data-markdown>
@@ -697,21 +554,20 @@ let num = 1
 num.a = 123
 Reflect.set(num, 'a', 123) // TypeError
 [run]
-
 ```
 ```
 let num = {b:"b"}
-console.log('num.a',num.a)  // undefined
-console.log('b',Reflect.get(num, 'b'))  // b
+console.log('num.a', num.a)  // undefined
+console.log('b', Reflect.get(num, 'b'))  // b
 Reflect.set(num, 'a', 'a') 
-console.log('a',Reflect.get(num, 'a'))  // a
+console.log('a', Reflect.get(num, 'a'))  // a
 console.log(num) // {b: "b", a: "a"}
 [run]
 ```
 	</section>
 	<section data-markdown>
 		```
-		// 老写法
+		// Old way
 		try {
 			Object.defineProperty(target, property, attributes)
 			// success
@@ -719,7 +575,7 @@ console.log(num) // {b: "b", a: "a"}
 			// failure
 		}
 		
-		// 新写法
+		// New way
 		if (Reflect.defineProperty(target, property, attributes)) {
 			// success
 		} else {
@@ -728,11 +584,11 @@ console.log(num) // {b: "b", a: "a"}
 
 		```
 		```
-// 老写法
-'assign' in Object // true
+		// Old way
+		'assign' in Object // true
 
-// 新写法
-Reflect.has(Object, 'assign') // true
+		// New way
+		Reflect.has(Object, 'assign') // true
 		```
 	</section>
 	<section data-markdown>
@@ -775,7 +631,7 @@ Reflect.has(Object, 'assign') // true
 		</script>
 
 		<script>
-			// 实现文中代码的运行功能（eval运行），匹配末尾为“[run]”的
+			// Implements the "run code" feature (eval) for code blocks ending with “[run]”
 			const runCode = function() {
 				const code = this.parentNode.innerHTML
 					.replace(/(<span.*?>)|(<\/span>)|(<div.*div>)/g, '')
@@ -804,7 +660,7 @@ Reflect.has(Object, 'assign') // true
 			}, 50);
 		</script>
 
-		<!-- 自定义的样式 -->
+		<!-- Custom styles -->
 		<style rel="stylesheet">
 			.reveal h1 {
 				font-size: 3.1rem;
@@ -860,3 +716,4 @@ Reflect.has(Object, 'assign') // true
 		</style>
 	</body>
 </html>
+```
