@@ -41,7 +41,6 @@
 		- Map/WeakMap(Set)
 		- Promise & async function, macro task & micro task
 		- Proxy
-		- Reflect
 	</section>
 </section>
 
@@ -459,27 +458,30 @@ asyncFunc()
 ```
 	</section>
 	<section data-markdown>
-```javascript
-setTimeout(function() {console.log(5)}, 0)
-new Promise((resolve) => {
-  console.log(1)
-  resolve()
-  console.log(2)
-}).then(function() {
-  console.log(4)
-});
-console.log(3)
-[run]
-```
+		# Macro task & micro task
+
+- **Macro tasks**: `setTimeout`, `setInterval`, etc.
+- **Micro tasks**: Promises `.then()`, `MutationObserver`, `process.nextTick` in Node.
+- JavaScript event loop processes **micro tasks** before moving on to the next **macro task**.
 	</section>
 	<section data-markdown>
-		# macro task & micro task
-		https://github.com/creeperyang/blog/issues/21  
-		https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/  
-		https://jsblog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810  
-		https://zhuanlan.zhihu.com/p/35039878  
-		https://cnodejs.org/topic/57d68794cb6f605d360105bf
+```javascript
+setTimeout(() => console.log(5), 0);  // macro task
+
+new Promise((resolve) => {
+  console.log(1);
+  resolve();
+  console.log(2);
+}).then(() => {
+  console.log(4); // micro task
+});
+
+console.log(3);
+[run]
+```
+**Order:** 1, 2, 3, 4, 5
 	</section>
+	
 </section>
 
 <section>
@@ -534,83 +536,8 @@ handler.apply // Triggered when the target object is a function and is called.
 		</section>
 </section>
 
-<section>
-	<section data-markdown>
-# Reflect
-- Moves some of Object’s internal methods (e.g. Object.defineProperty) to the Reflect object
-- Storing these methods in a single global object makes other JavaScript code clearer and cleaner
-- Replaces certain imperative operations like delete and in with function equivalents, to make code more maintainable and backward-compatible
-	</section>
-
-	<section data-markdown>
-```
-let num = 1
-console.log(num.a)
-console.log(Reflect.get(num, 'a')) // TypeError
-[run]
-```
-```
-let num = 1
-num.a = 123
-Reflect.set(num, 'a', 123) // TypeError
-[run]
-```
-```
-let num = {b:"b"}
-console.log('num.a', num.a)  // undefined
-console.log('b', Reflect.get(num, 'b'))  // b
-Reflect.set(num, 'a', 'a') 
-console.log('a', Reflect.get(num, 'a'))  // a
-console.log(num) // {b: "b", a: "a"}
-[run]
-```
-	</section>
-	<section data-markdown>
-		```
-		// Old way
-		try {
-			Object.defineProperty(target, property, attributes)
-			// success
-		} catch (e) {
-			// failure
-		}
-		
-		// New way
-		if (Reflect.defineProperty(target, property, attributes)) {
-			// success
-		} else {
-			// failure
-		}
-
-		```
-		```
-		// Old way
-		'assign' in Object // true
-
-		// New way
-		Reflect.has(Object, 'assign') // true
-		```
-	</section>
-	<section data-markdown>
-		```
-		Reflect.apply // Function.prototype.apply
-		Reflect.construct // new
-		Reflect.defineProperty // Object.defineProperty
-		Reflect.deleteProperty // Object.deleteProperty
-		Reflect.get // obj.foo
-		Reflect.set // obj.foo = 1
-		Reflect.has // in
-		Reflect.getOwnPropertyDescriptor //  Object.getOwnPropertyDescriptor
-		Reflect.getPrototypeOf // Object.getPrototypeOf
-		Reflect.setPrototypeOf // Object.setPrototypeOf
-		Reflect.isExtensible // Object.isExtensible
-		Reflect.ownKeys // Object.getOwnPropertyNames(obj).concat(Object.getOwnPropertySymbols(obj))
-		Reflect.preventExtensions // Object.preventExtensions
-		```
-	</section>
-</section>
 <section data-markdown>
-	# Q & A
+	# Thank You!
 </section>
 
   		</div>
